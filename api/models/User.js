@@ -16,6 +16,10 @@ const UserSchema = new mongoose.Schema({
             message: 'This user is already registered'
         }
     },
+    displayName: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true,
