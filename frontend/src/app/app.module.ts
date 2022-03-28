@@ -13,6 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FlexModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     MatCardModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    FlexModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
