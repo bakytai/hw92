@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "express-ws": "^5.0.2",
+    "mongoose": "^6.2.9",
     "nanoid": "^3.3.2",
     "nodemon": "^2.0.15"
   }
