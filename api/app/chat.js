@@ -1,10 +1,10 @@
 const {nanoid} = require('nanoid');
 const User = require('../models/User');
 const Message = require('../models/User');
-const {raw} = require("express");
 
 const activeConnections = {};
 let user = null;
+users = [];
 
 module.exports= (ws, req) => {
     const id = nanoid();
@@ -16,6 +16,7 @@ module.exports= (ws, req) => {
         switch (decodedMessage.type) {
             case 'LOGIN':
                 user = await User.findOne({token: decodedMessage.token});
+                users.push(user);
                 const messages = await Message.find().populate("user", "displayName");
                 Object.keys(activeConnections).forEach(id => {
                     const conn = activeConnections[id];
@@ -33,11 +34,15 @@ module.exports= (ws, req) => {
                 break;
             case 'SEND_MESSAGE':
                 if (user === null) break;
+                user = await User.findOne({token: decodedMessage.token});
                 Object.keys(activeConnections).forEach(id => {
                     const conn = activeConnections[id];
                     conn.send(JSON.stringify({
                         type: 'NEW_MESSAGE',
-                        message: decodedMessage.text
+                        message: {
+                            user: user.displayName,
+                            message: decodedMessage.text
+                        }
                     }))
                 });
                 break;

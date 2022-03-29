@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AppState } from '../store/types';
 import { map } from 'rxjs/operators';
+import { HelpersService } from './helpers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class AuthServiceService {
   user: Observable<null | User>
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>, private router: Router, private helpers: HelpersService) {
     this.user = store.select(state => state.users.user);
   }
 
@@ -23,7 +24,8 @@ export class AuthServiceService {
           return true;
         }
 
-        void this.router.navigate(['/login']);
+        void this.router.navigate(['/']);
+        this.helpers.openSnackbar('Log in to your account!')
         return false;
       })
     )

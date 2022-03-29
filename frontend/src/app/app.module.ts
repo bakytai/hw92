@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from '@ngrx/store';
+import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { CenteredCardComponent } from './ui/centered-card/centered-card.component';
 import { MatCardModule } from '@angular/material/card';
@@ -26,6 +26,18 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ChatComponent } from './chat/chat.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { usersReducer } from './store/users.reducer';
+import { UsersEffects } from './store/users.effects';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
+  return localStorageSync({
+    keys: [{users: ['user']}],
+    rehydrate: true
+  })(reducer);
+}
+
+const metaReducers: MetaReducer[] = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -43,8 +55,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({users: usersReducer}, {metaReducers}),
+    EffectsModule.forRoot([UsersEffects]),
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
