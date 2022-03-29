@@ -21,6 +21,13 @@ module.exports= (ws, req) => {
                 Object.keys(activeConnections).forEach(id => {
                     const conn = activeConnections[id];
                     conn.send(JSON.stringify({
+                        type: 'All_USERS',
+                        message: users
+                    }))
+                })
+                Object.keys(activeConnections).forEach(id => {
+                    const conn = activeConnections[id];
+                    conn.send(JSON.stringify({
                         type: 'All_MESSAGE',
                         message: messages
                     }))
@@ -29,8 +36,12 @@ module.exports= (ws, req) => {
 
             case 'LOGOUT':
                 user = await User.findOne({token: decodedMessage.token});
-
-
+                users.forEach(deleteUser => {
+                    if (user.token === deleteUser.token) {
+                        const id = users.indexOf(deleteUser);
+                        users.splice(id, 1);
+                    }
+                })
                 break;
             case 'SEND_MESSAGE':
                 if (user === null) break;

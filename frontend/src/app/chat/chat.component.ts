@@ -17,7 +17,7 @@ interface ServerMessage {
   styleUrls: ['./chat.component.sass']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  users!: User[];
+  users = [];
   usernameText = '';
   messageText = '';
   messages: Message[] = [];
@@ -34,6 +34,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
       if (decodedMessage.type === 'NEW_MESSAGE') {
         this.messages.push(decodedMessage.message);
+      }
+      if (decodedMessage.type === 'ALL_USERS') {
+        // this.users.push(decodedMessage.message);
       }
     };
   }
