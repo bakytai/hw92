@@ -60,6 +60,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       }
 
       if (decodedMessage.type === 'ALL_MESSAGE') {
+        console.log(decodedMessage.message);
         this.messages = decodedMessage.message.messages;
         this.users = decodedMessage.message.users;
       }

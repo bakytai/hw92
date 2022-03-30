@@ -55,13 +55,13 @@ module.exports= (ws, req) => {
                     user: userOnline,
                     text: decodedMessage.text
                 });
-                const newMessage = await Message.find().populate('user', '_id email displayName token').limit(30);
+                const newMessages = await Message.find().populate('user', '_id email displayName token').limit(30);
                 Object.keys(activeConnections).forEach(id => {
                     const conn = activeConnections[id];
                     conn.send(JSON.stringify({
                         type: 'NEW_MESSAGE',
                         message: {
-                            messages: newMessage
+                            messages: newMessages
                         }
                     }))
                 });
