@@ -31,16 +31,16 @@ const run = async () => {
 
     await Message.create({
         user: sara,
-        message: 'my name is Sara'
+        text: 'my name is Sara'
     }, {
         user: sara,
-        message: 'how do you feel?'
+        text: 'how do you feel?'
     }, {
         user: alina,
-        message: 'my name is Alina'
+        text: 'my name is Alina'
     }, {
         user: alina,
-        message: 'how are you'
+        text: 'how are you'
     });
 
     await mongoose.connection.close();

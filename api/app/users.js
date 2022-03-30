@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/',async (req, res, next) => {
     try {
+        console.log(req.body)
         if (!req.body.email || !req.body.password || !req.body.displayName) {
             return res.status(400).send({message: 'Please complete all fields'});
         }
